@@ -105,7 +105,7 @@
 
 ## 🛠️ Đóng Góp Thông Tin (Contribute)
 
-Chúng tôi rất mong nhận được sự chia sẻ về các loại trà và trà cụ quý từ bạn. Vui lòng bấm vào các đường dẫn tương ứng dưới đây để bổ sung thông tin vào kho dữ liệu:
+Em rất mong nhận được sự chia sẻ về các loại trà và trà cụ quý từ bạn. Vui lòng bấm vào các đường dẫn tương ứng dưới đây để bổ sung thông tin vào kho dữ liệu:
 
 *   💾 [Cập nhật danh sách các loại TRÀ tại đây](https://example.com/database/tea-list)
 *   💾 [Cập nhật danh sách các loại ẤM TRÀ tại đây](https://example.com/database/teapots-list)
