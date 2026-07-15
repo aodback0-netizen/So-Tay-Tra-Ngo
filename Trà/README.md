@@ -1,6 +1,6 @@
 # Danh Mục Trà
 
-Đây là hệ thống 14 tài liệu phân tích về các loại trà mộc và trà ướp hương mà em đã tổng hợp lại. Thay vì phân loại khô khan bằng hệ thống biểu bảng, em đã viết lại toàn bộ cấu trúc dựa trên sự thấu hiểu về nguồn gốc, bản chất hương vị, và đặc biệt là cách thức thưởng trà sao cho trọn vẹn và bảo vệ sức khỏe nhất.
+Đây là hệ thống 14 tài liệu phân tích về các loại trà mộc và trà ướp hương mà em đã tổng hợp lại.Em đã viết toàn bộ cấu trúc dựa trên sự tìm hiểu về nguồn gốc, bản chất hương vị, và đặc biệt là cách thức thưởng trà sao cho trọn vẹn và bảo vệ sức khỏe nhất.
 
 Dưới đây là từng đường dẫn dưới đây để xem chi tiết từng bài phân tích
 
