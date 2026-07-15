@@ -103,8 +103,7 @@
 
 ---
 
-## 🛠️ Đóng Góp Thông Tin (Contribute)
-
-
-
-> *"Bình tâm nhìn khói quyện / Nhấp ngụm trà an nhiên."* Chúc bạn có những phút giây thư thái bên bàn trà!
+## 🛠️ Thành Viên Đóng Góp Thông Tin (Contribute)
+# Đỗ Xuân Bách - HE210487 - Leader - Admn - Core contributor
+# Đỗ Trọng Hiếu - Information contributor
+# Tạ Gia Huy - Information contributor
