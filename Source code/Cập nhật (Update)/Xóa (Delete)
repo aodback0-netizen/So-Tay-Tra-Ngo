@@ -1,0 +1,13 @@
+// Tính năng 4: Xóa (Dịch chuyển mảng để ghi đè)
+bool XoaVatPham(int id) {
+    for (int i = 0; i < soLuong; i++) {
+        if (khoDuLieu[i].id == id) {
+            for (int j = i; j < soLuong - 1; j++) {
+                khoDuLieu[j] = khoDuLieu[j + 1];
+            }
+            soLuong--;
+            return true;
+        }
+    }
+    return false;
+}
