@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_ITEMS 1000
+#define STR_LEN 150
+
+// Định nghĩa cấu trúc dữ liệu
+typedef struct {
+    int id;
+    char ten[STR_LEN];
+    char phanLoai[STR_LEN]; // Ví dụ: "Chen tra", "Am tra", "Tra"
+} VatPham;
+
+VatPham khoDuLieu[MAX_ITEMS];
+int soLuong = 0;
