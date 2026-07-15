@@ -1,0 +1,9 @@
+// Tính năng 4: Tìm kiếm tuyến tính (Linear Search) theo tên
+int TimKiemTheoTen(const char* tuKhoa) {
+    for (int i = 0; i < soLuong; i++) {
+        if (strstr(khoDuLieu[i].ten, tuKhoa) != NULL) {
+            return i; // Trả về chỉ mục mảng
+        }
+    }
+    return -1; // Không tìm thấy
+}
