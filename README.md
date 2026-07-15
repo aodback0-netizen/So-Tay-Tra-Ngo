@@ -110,6 +110,7 @@
 # Danh Mục Trà
 ---
 # Danh sách trà
+
 Đây là hệ thống 14 tài liệu phân tích về các loại trà mộc và trà ướp hương mà em đã tổng hợp lại.Em đã viết toàn bộ cấu trúc dựa trên sự tìm hiểu về nguồn gốc, bản chất hương vị, và đặc biệt là cách thức thưởng trà sao cho trọn vẹn và bảo vệ sức khỏe nhất.
 Dưới đây là từng đường dẫn dưới đây để xem chi tiết từng bài phân tích
 Vui lòng truy cập vào từng tệp tin để xem báo cáo chi tiết:
@@ -127,3 +128,18 @@ Vui lòng truy cập vào từng tệp tin để xem báo cáo chi tiết:
 12. [Trà Ô Long Đông Phương Mỹ Nhân](./Trà_Ô_Long_Đông_Phương_Mỹ_Nhân.md)
 13. [Trà Đại Hồng Bào](./Trà_Đại_Hồng_Bào.md)
 14. [Trà Ướp Bông Sen Tây Hồ](./Trà_Ướp_Bông_Sen_Tây_Hồ.md)
+# Danh sách ấm trà
+
+1. [Ấm Bạc](./am-bac.md)
+2. [Ấm Gốm Kyusu](./am-gom-kyusu.md)
+3. [Ấm Sứ Cảnh Đức Trấn](./am-su-canh-duc-tran.md)
+4. [Ấm Sứ Vẽ Tay](./am-su-ve-tay.md)
+5. [Ấm Thủy Tinh](./am-thuy-tinh.md)
+6. [Ấm Thủy Tinh Có Lõi Lọc](./am-thuy-tinh-co-loi-loc.md)
+7. [Ấm Tử Sa Báo Xuân](./am-tu-sa-bao-xuan.md)
+8. [Ấm Tử Sa Dung Thiên](./am-tu-sa-dung-thien.md)
+9. [Ấm Tử Sa Thạch Biều](./am-tu-sa-thach-bieu.md)
+10. [Ấm Tử Sa Thủy Bình](./am-tu-sa-thuy-binh.md)
+11. [Ấm Tử Sa Tây Thi](./am-tu-sa-tay-thi.md)
+12. [Ấm Đất Nung Chu Nê](./am-dat-nung-chu-ne.md)
+13. [Ấm Đất Nung Không Men](./am-dat-nung-khong-men.md)
