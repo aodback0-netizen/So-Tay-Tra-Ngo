@@ -104,6 +104,6 @@
 ---
 
 ## 🛠️ Thành Viên Đóng Góp Thông Tin (Contribute)
-# Đỗ Xuân Bách - HE210487 - Leader - Admn - Core contributor - Manage information - Dev
+# Đỗ Xuân Bách - HE210487 - Leader - Admn - Manage information - Dev
 # Đỗ Trọng Hiếu - Information contributor
-# Tạ Gia Huy - Information contributor
+# Tạ Gia Huy - Information contributor - Dev
