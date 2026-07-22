@@ -1,0 +1,20 @@
+=========================================================================================================================
+[TABLE 1: DANH MUC TRA - TEA DATABASE]
++--------------------------------+-----------------------------+-----------------------------------+----------+-------------+
+| TEN TEP (14)                   | PATH                        | HUONG VI & DAC TINH               | NHIET DO | GIA(VND/KG) |
++--------------------------------+-----------------------------+-----------------------------------+----------+-------------+
+| Bach Tra Bach Hao Ngan Cham    | /db/tra/bach-hao.md         | Thanh tao, ngot diu, kim trang    | 75-80'C  | 4.500.000   |
+| Hong Tra                       | /db/tra/hong-tra.md         | Dam da, ngot hau, huong moc       | 90-95'C  | 1.200.000   |
+| Tra Hoa Cuc Ky Tu              | /db/tra/cuc-ky-tu.md        | Thao moc, thu gian, tot thi giac  | 90'C     | 800.000     |
+| Tra Long Tinh                  | /db/tra/long-tinh.md        | Huong hat de nuong, vi thanh mat  | 80-85'C  | 6.000.000   |
+| Tra Matcha                     | /db/tra/matcha.md           | Umami dam, chat nhe, dang bot min | 75-80'C  | 3.000.000   |
+| Tra Pho Nhi Chin               | /db/tra/pho-nhi-chin.md     | Mui go muc, em da day, nuoc do    | 95-100'C | 2.500.000   |
+| Tra Pho Nhi Song               | /db/tra/pho-nhi-song.md     | Chat thanh, hau ngot sau          | 95-100'C | 3.500.000   |
+| Tra San Tuyet Co Thu           | /db/tra/san-tuyet.md        | Vi suong nui, long tuyet trang    | 85-90'C  | 2.800.000   |
+| Tra Thiet Quan Am              | /db/tra/thiet-quan-am.md    | Huong lan toa, vi tinh khiet      | 90-95'C  | 2.200.000   |
+| Tra Thai Nguyen                | /db/tra/thai-nguyen.md      | Com non, chat duom, hau ngot bui  | 80-85'C  | 1.000.000   |
+| Tra O Long Thuan               | /db/tra/o-long-thuan.md     | Tron vi, huong moc, nuoc vang kim | 90-95'C  | 1.800.000   |
+| Tra O Long Dong Phuong My Nhan | /db/tra/dong-phuong.md      | Huong mat ong rung, trai cay chin | 85-90'C  | 4.000.000   |
+| Tra Dai Hong Bao               | /db/tra/dai-hong-bao.md     | Nham van sau, nuong than, manh me | 95-100'C | 15.000.000  |
+| Tra Uop Bong Sen Tay Ho        | /db/tra/sen-tay-ho.md       | Gao sen tuoi, uop thu cong        | 80-85'C  | 8.000.000/b |
++--------------------------------+-----------------------------+-----------------------------------+----------+-------------+
