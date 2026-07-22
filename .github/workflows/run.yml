@@ -1,0 +1,16 @@
+name: Run C Script
+
+on:
+  workflow_dispatch: # Cho phép bấm nút chạy thủ công trên web
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compile and Run C Program
+        run: |
+          gcc main.c -o tracu
+          ./tracu
