@@ -8,70 +8,98 @@
 #include <windows.h>
 #endif
 
-#define MAX_ITEMS 100
+#define MAX_FILES 200
 
-// Cấu trúc định nghĩa danh mục thư viện trà
 typedef struct {
     char category[50];
-    char path[100];
-} TeaLibrary;
+    char filename[100];
+    char filepath[300];
+    char markdown_link[400];
+} TeaFile;
 
-// Hàm thiết lập giao diện bảng ASCII
-void renderTable(TeaLibrary items[], int size) {
-    printf("+--------------------------------+------------------------------------------------+\n");
-    printf("| Danh Mục                       | Đường Dẫn Tương Đối                            |\n");
-    printf("+--------------------------------+------------------------------------------------+\n");
+// Hàm chuyển đổi khoảng trắng thành %20 cho đường dẫn URL Markdown
+void encodeURL(const char* input, char* output, size_t max_len) {
+    size_t j = 0;
+    for (size_t i = 0; input[i] != '\0' && j < max_len - 4; i++) {
+        if (input[i] == ' ') {
+            output[j++] = '%';
+            output[j++] = '2';
+            output[j++] = '0';
+        } else {
+            output[j++] = input[i];
+        }
+    }
+    output[j] = '\0';
+}
+
+// Quét lùi lại 1 cấp thư mục (../) để tìm đúng vị trí các folder chứa tệp
+void scanDirectoryForFiles(const char* dir_name, const char* category, TeaFile files[], int* count) {
+    DIR *dir = opendir(dir_name);
+    if (dir == NULL) return;
+
+    struct dirent *ent;
+    struct stat path_stat;
+    char full_path[300];
+    char encoded_path[350];
+
+    while ((ent = readdir(dir)) != NULL) {
+        if (ent->d_name[0] == '.') continue;
+
+        snprintf(full_path, sizeof(full_path), "%s/%s", dir_name, ent->d_name);
+        
+        if (stat(full_path, &path_stat) == 0) {
+            if (S_ISREG(path_stat.st_mode)) {
+                strncpy(files[*count].category, category, sizeof(files[*count].category) - 1);
+                strncpy(files[*count].filename, ent->d_name, sizeof(files[*count].filename) - 1);
+                strncpy(files[*count].filepath, full_path, sizeof(files[*count].filepath) - 1);
+                
+                // Mã hóa đường dẫn và tạo cú pháp Markdown chuẩn
+                encodeURL(full_path, encoded_path, sizeof(encoded_path));
+                snprintf(files[*count].markdown_link, sizeof(files[*count].markdown_link), 
+                         "[%s](%s)", ent->d_name, encoded_path);
+
+                (*count)++;
+                if (*count >= MAX_FILES) {
+                    closedir(dir);
+                    return;
+                }
+            }
+        }
+    }
+    closedir(dir);
+}
+
+void renderTable(TeaFile files[], int count) {
+    printf("+----------------------+------------------------------------------+------------------------------------------------------+\n");
+    printf("| Danh Mục             | Tên Tệp                                  | Đường Dẫn Markdown Chuẩn                             |\n");
+    printf("+----------------------+------------------------------------------+------------------------------------------------------+\n");
     
-    for (int i = 0; i < size; i++) {
-        printf("| %-30s | %-46s |\n", items[i].category, items[i].path);
+    for (int i = 0; i < count; i++) {
+        printf("| %-20s | %-40s | %-52s |\n", files[i].category, files[i].filename, files[i].markdown_link);
     }
     
-    printf("+--------------------------------+------------------------------------------------+\n");
+    printf("+----------------------+------------------------------------------+------------------------------------------------------+\n");
 }
 
 int main() {
-    // Thiết lập bảng mã UTF-8 cho dòng lệnh Windows
     #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
     #endif
 
-    TeaLibrary library[MAX_ITEMS];
+    TeaFile files[MAX_FILES];
     int count = 0;
 
-    // Mở thư mục hiện tại
-    DIR *dir = opendir(".");
-    if (dir == NULL) {
-        printf("Lỗi hệ thống: Không thể cấp phát luồng đọc thư mục.\n");
-        return EXIT_FAILURE;
-    }
+    // Trỏ ra ngoài thư mục gốc từ vị trí Source code/
+    scanDirectoryForFiles("../Trà", "Trà", files, &count);
+    scanDirectoryForFiles("../Ấm trà", "Ấm Trà", files, &count);
+    scanDirectoryForFiles("../Chén trà", "Chén Trà", files, &count);
+    scanDirectoryForFiles("../Trà cụ", "Trà Cụ", files, &count);
 
-    struct dirent *ent;
-    struct stat path_stat;
-
-    // Quét động các thành phần bên trong
-    while ((ent = readdir(dir)) != NULL) {
-        // Bỏ qua các thành phần ẩn của hệ thống (ví dụ: .git, .github, ., ..)
-        if (ent->d_name[0] == '.') {
-            continue;
-        }
-
-        // Truy xuất metadata để xác minh đối tượng là thư mục
-        stat(ent->d_name, &path_stat);
-        if (S_ISDIR(path_stat.st_mode)) {
-            strncpy(library[count].category, ent->d_name, sizeof(library[count].category) - 1);
-            snprintf(library[count].path, sizeof(library[count].path), "./%s", ent->d_name);
-            
-            count++;
-            if (count >= MAX_ITEMS) break;
-        }
-    }
-    closedir(dir);
-
-    printf("\nHệ Thống Quản Lý Thư Viện Trà (Quét Tự Động)\n");
+    printf("\n=== KẾT QUẢ TRÍCH XUẤT ĐƯỜNG DẪN TỰ ĐỘNG ===\n");
     if (count > 0) {
-        renderTable(library, count);
+        renderTable(files, count);
     } else {
-        printf("Không tìm thấy cấu trúc dữ liệu hợp lệ trong vùng nhớ.\n");
+        printf("Lỗi: Không tìm thấy tệp tin. Vui lòng kiểm tra lại cấu trúc thư mục.\n");
     }
 
     return 0;
