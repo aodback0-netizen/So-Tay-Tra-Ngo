@@ -1,0 +1,20 @@
+=========================================================================================================================
+[TABLE 4: DANH MUC TRA CU - TEA TOOLS DATABASE]
++--------------------------------+-----------------------------+------------------+-------------------------+-----------+
+| TEN TEP (14)                   | PATH                        | CHAT LIEU        | CONG DUNG & DAC TINH    | GIA (VND) |
++--------------------------------+-----------------------------+------------------+-------------------------+-----------+
+| Chasen                         | /db/cu/chasen.md            | Tre truc         | Danh bot Matcha         | 400.000   |
+| Dao tach tra Pho Nhi           | /db/cu/dao-pho-nhi.md       | Thep/Sung bo     | Tach banh tra ep chat   | 350.000   |
+| Gac am                         | /db/cu/gac-am.md            | Go/Su            | Ke nap am chanh ban     | 150.000   |
+| Khay tra tre                   | /db/cu/khay-tre.md          | Tre ep           | Tru nuoc, dat am chen   | 850.000   |
+| Khan lau ban tra               | /db/cu/khan-lau.md          | Soi cotton       | Ve sinh, duong am       | 80.000    |
+| Kep gap chen                   | /db/cu/kep-gap.md           | Go/Tre           | Gap chen tranh bong     | 90.000    |
+| Lu xong tram                   | /db/cu/lu-tram.md           | Dong/Gom         | Dot huong tinh tam      | 1.200.000 |
+| Loc tra                        | /db/cu/loc-tra.md           | Su/Luoi Inox     | Loc can nuoc trong      | 250.000   |
+| Muong xuc tra                  | /db/cu/muong-xuc.md         | Go huong/Tre     | Lay tra tu hu           | 120.000   |
+| Thuyen tra                     | /db/cu/thuyen-tra.md        | Gom/Su           | Hung nuoc duong am      | 650.000   |
+| Thuong nhac ban tra            | /db/cu/thuong-nhac.md       | Dien tu/Co hoc   | Phat nhac thien dinh    | 1.500.000 |
+| Tong tra                       | /db/cu/tong-tra.md          | Thuy tinh/Su     | Chua nuoc, ha nhiet     | 300.000   |
+| De nen giu nhiet               | /db/cu/de-nen.md            | Thuy tinh/Sat    | Dun nhe giu am tong     | 280.000   |
+| Dong ho cat                    | /db/cu/dong-ho-cat.md       | Thuy tinh/Go     | Canh thoi gian u tra    | 180.000   |
++--------------------------------+-----------------------------+------------------+-------------------------+-----------+
