@@ -1,16 +1,22 @@
-name: Run C Script
+name: C Command Line Interface Builder
 
 on:
-  workflow_dispatch: # Cho phép bấm nút chạy thủ công trên web
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build-and-run:
+  build-and-execute:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
 
-      - name: Compile and Run C Program
-        run: |
-          gcc main.c -o tracu
-          ./tracu
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Compile C program
+      # Đảm bảo tên tệp main.c khớp với tên tệp bạn đã lưu mã nguồn C
+      run: gcc -o tea_library main.c
+
+    - name: Execute C program
+      run: ./tea_library
