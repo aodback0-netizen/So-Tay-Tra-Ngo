@@ -1,0 +1,186 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+
+#define MAX_ITEMS 200
+#define MAX_LEN 256
+
+// Cấu trúc dữ liệu đại diện cho 1 thực thể (Trà, Ấm, Chén, Trà cụ)
+typedef struct {
+    int id;
+    char name[MAX_LEN];
+    char category[MAX_LEN];
+    char filepath[MAX_LEN];
+    int price; // Giá định mức tham chiếu (VND)
+} TeaEntity;
+
+TeaEntity database[MAX_ITEMS];
+int db_count = 0;
+
+// ==========================================
+// 1. BIỂU DIỄN (READ) - Nạp dữ liệu vào RAM
+// ==========================================
+void Read_ScanFolder(const char* dir_name, const char* category, int default_price) {
+    DIR *dir = opendir(dir_name);
+    if (!dir) return;
+
+    struct dirent *ent;
+    while ((ent = readdir(dir)) != NULL) {
+        if (ent->d_name[0] == '.') continue;
+        if (strstr(ent->d_name, ".md") != NULL) {
+            database[db_count].id = db_count + 1;
+            
+            // Trích xuất tên hiển thị (bỏ đuôi .md)
+            strncpy(database[db_count].name, ent->d_name, strlen(ent->d_name) - 3);
+            database[db_count].name[strlen(ent->d_name) - 3] = '\0';
+            
+            strcpy(database[db_count].category, category);
+            snprintf(database[db_count].filepath, MAX_LEN, "%s/%s", dir_name, ent->d_name);
+            database[db_count].price = default_price + (db_count * 50000); // Giả lập mức giá định mức để Sort/Filter
+
+            db_count++;
+        }
+    }
+    closedir(dir);
+}
+
+void Read_All() {
+    db_count = 0;
+    Read_ScanFolder("Trà", "Trà", 1000000);
+    Read_ScanFolder("Ấm trà", "Ấm trà", 1500000);
+    Read_ScanFolder("Chén trà", "Chén trà", 500000);
+    Read_ScanFolder("Trà cụ", "Trà cụ", 200000);
+}
+
+void Print_Table(TeaEntity* list, int count) {
+    printf("+----+-----------------------------------+------------+-----------------+------------------------------+\n");
+    printf("| ID | TÊN THỰC THỂ                      | DANH MỤC   | GIÁ THAM KHẢO   | ĐƯỜNG DẪN TỆP                |\n");
+    printf("+----+-----------------------------------+------------+-----------------+------------------------------+\n");
+    for (int i = 0; i < count; i++) {
+        printf("| %-2d | %-33s | %-10s | %-12d VNĐ | %-28s |\n", 
+               list[i].id, list[i].name, list[i].category, list[i].price, list[i].filepath);
+    }
+    printf("+----+-----------------------------------+------------+-----------------+------------------------------+\n");
+    printf("Tổng số lượng: %d mục.\n\n", count);
+}
+
+// ==========================================
+// 2. TÌM KIẾM (SEARCH) - Tìm theo chuỗi con
+// ==========================================
+void Search(const char* keyword) {
+    printf("\n=== KẾT QUẢ TÌM KIẾM TỪ KHÓA: '%s' ===\n", keyword);
+    TeaEntity results[MAX_ITEMS];
+    int res_count = 0;
+
+    for (int i = 0; i < db_count; i++) {
+        if (strstr(database[i].name, keyword) != NULL || strstr(database[i].category, keyword) != NULL) {
+            results[res_count++] = database[i];
+        }
+    }
+    Print_Table(results, res_count);
+}
+
+// ==========================================
+// 3. LỌC (FILTER) - Lọc theo khoảng giá
+// ==========================================
+void Filter_By_Price(int min_price, int max_price) {
+    printf("\n=== KẾT QUẢ LỌC GIÁ TỪ %d VNĐ ĐẾN %d VNĐ ===\n", min_price, max_price);
+    TeaEntity results[MAX_ITEMS];
+    int res_count = 0;
+
+    for (int i = 0; i < db_count; i++) {
+        if (database[i].price >= min_price && database[i].price <= max_price) {
+            results[res_count++] = database[i];
+        }
+    }
+    Print_Table(results, res_count);
+}
+
+// ==========================================
+// 4. SẮP XẾP (SORT) - Dùng QuickSort
+// ==========================================
+int Compare_Price_Asc(const void* a, const void* b) {
+    return ((TeaEntity*)a)->price - ((TeaEntity*)b)->price;
+}
+
+void Sort_By_Price() {
+    printf("\n=== DANH SÁCH SAU KHI SẮP XẾP THEO GIÁ (TĂNG DẦN) ===\n");
+    TeaEntity sorted_db[MAX_ITEMS];
+    memcpy(sorted_db, database, sizeof(TeaEntity) * db_count);
+    
+    qsort(sorted_db, db_count, sizeof(TeaEntity), Compare_Price_Asc);
+    Print_Table(sorted_db, db_count);
+}
+
+// ==========================================
+// 5. THÊM (ADD) - Tạo tệp Markdown mới
+// ==========================================
+void Add_Item(const char* folder, const char* filename, const char* content) {
+    char fullpath[MAX_LEN];
+    snprintf(fullpath, MAX_LEN, "%s/%s.md", folder, filename);
+
+    FILE *file = fopen(fullpath, "w");
+    if (file) {
+        fprintf(file, "# %s\n\n%s\n", filename, content);
+        fclose(file);
+        printf("[Thành công] Đã khởi tạo tệp mới: %s\n", fullpath);
+    } else {
+        printf("[Lỗi] Không thể tạo tệp tại %s\n", fullpath);
+    }
+}
+
+// ==========================================
+// 6. XÓA (DELETE) - Xóa tệp vật lý trên disk
+// ==========================================
+void Delete_Item(const char* filepath) {
+    if (remove(filepath) == 0) {
+        printf("[Thành công] Đã xóa tệp vật lý: %s\n", filepath);
+    } else {
+        printf("[Lỗi] Không thể xóa tệp: %s\n", filepath);
+    }
+}
+
+// ==========================================
+// LUỒNG ĐIỀU KHIỂN CHÍNH (MAIN)
+// ==========================================
+int main(int argc, char *argv[]) {
+    // Bước 1: Khởi tạo dữ liệu từ 56 file .md
+    Read_All();
+
+    // Bước 2: Xử lý theo Arguments truyền vào từ CI/CD hoặc CMD
+    if (argc > 1) {
+        char* cmd = argv[1];
+        if (strcmp(cmd, "read") == 0) Print_Table(database, db_count);
+        else if (strcmp(cmd, "search") == 0 && argc > 2) Search(argv[2]);
+        else if (strcmp(cmd, "sort") == 0) Sort_By_Price();
+        else if (strcmp(cmd, "filter") == 0 && argc > 3) Filter_By_Price(atoi(argv[2]), atoi(argv[3]));
+        else if (strcmp(cmd, "add") == 0 && argc > 4) Add_Item(argv[2], argv[3], argv[4]);
+        else if (strcmp(cmd, "delete") == 0 && argc > 2) Delete_Item(argv[2]);
+    } else {
+        // Mặc định thực thi Demo toàn bộ 6 chức năng trên GitHub Action
+        printf("===================================================================================\n");
+        printf("                HỆ THỐNG QUẢN TRỊ CƠ SỞ DỮ LIỆU SỔ TAY TRÀ NGỘ (CLI)               \n");
+        printf("===================================================================================\n");
+        
+        printf("\n---> 1. [READ] HIỂN THỊ TOÀN BỘ DỮ LIỆU QUEÂT ĐƯỢC:\n");
+        Print_Table(database, db_count);
+
+        printf("\n---> 2. [SEARCH] TÌM KIẾM TỪ KHÓA 'Tử Sa':\n");
+        Search("Tử Sa");
+
+        printf("\n---> 3. [SORT] SẮP XẾP TOÀN BỘ DỮ LIỆU THEO GIÁ:\n");
+        Sort_By_Price();
+
+        printf("\n---> 4. [FILTER] LỌC SẢN PHẨM GIÁ TỪ 1.000.000 VNĐ ĐẾN 2.000.000 VNĐ:\n");
+        Filter_By_Price(1000000, 2000000);
+
+        printf("\n---> 5. [ADD] THÊM MỘT TỆP MỚI CÓ TÊN 'Trà Ô Long Đặc Biệt':\n");
+        Add_Item("Trà", "Trà Ô Long Đặc Biệt", "Nội dung mô tả loại trà thử nghiệm.");
+
+        printf("\n---> 6. [DELETE] XÓA TỆP THỬ NGHIỆM VỪA TẠO:\n");
+        Delete_Item("Trà/Trà Ô Long Đặc Biệt.md");
+    }
+
+    return 0;
+}
