@@ -1,1 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+void hien_thi_menu() {
+    printf("\n========================================\n");
+    printf("   HE THONG THU VIEN TRA DAO (CLI)      \n");
+    printf("========================================\n");
+    printf(" 1. Tra cuu Tra\n");
+    printf(" 2. Tra cuu Am tra\n");
+    printf(" 3. Tra cuu Chen tra\n");
+    printf(" 4. Tra cuu Tra cu\n");
+    printf(" 0. Thoat\n");
+    printf("========================================\n");
+    printf("Nhap lua chon cua ban: ");
+}
+
+int main() {
+    int choice;
+    while(1) {
+        hien_thi_menu();
+        if (scanf("%d", &choice) != 1) break;
+
+        switch(choice) {
+            case 1:
+                printf("\n--- DANH MUC TRA ---\n");
+                printf("- Bach Tra Bach Hao Ngan Cham\n- Hong Tra\n- Tra Hoa Cuc Ky Tu\n- Tra Long Tinh\n- Tra Matcha\n- Tra Pho Nhi Chin\n- Tra Pho Nhi Song\n- Tra San Tuyet Co Thu\n- Tra Thiet Quan Am\n- Tra Thai Nguyen\n- Tra O Long Thuan\n- Tra O Long Dong Phuong My Nhan\n- Tra Dai Hong Bao\n- Tra Uop Bong Sen Tay Ho\n");
+                break;
+            case 2:
+                printf("\n--- DANH MUC AM TRA ---\n");
+                printf("- Am Bac\n- Am Gom Kyusu\n- Am Su Canh Duc Tran\n- Am Su Ve Tay\n- Am Thuy Tinh\n- Am Thuy Tinh Co Loi Loc\n- Am Tu Sa Bao Xuan\n- Am Tu Sa Dung Thien\n- Am Tu Sa Thach Bieu\n- Am Tu Sa Thuy Binh\n- Am Tu Sa Tay Thi\n- Am Tu Sa Phong Co\n- Am Dat Nung Chu Ne\n- Am Dat Nung Khong Men\n");
+                break;
+            case 3:
+                printf("\n--- DANH MUC CHEN TRA ---\n");
+                printf("- Chen Bach Dinh\n- Chen Khai\n- Chen Kien Dieu\n- Chen Men Ran Co\n- Chen Mat Cong\n- Chen Quan Dang Nguong Ban\n- Chen Quan Lon\n- Chen Su Men Ngoc\n- Chen Su Men Thanh Hoa\n- Chen Su Thau Quang\n- Chen Su Trang Ve Hoa Sen\n- Chen Thuy Tinh Hai Lop\n- Chen Tu Sa\n- Chen Vanh Rong\n");
+                break;
+            case 4:
+                printf("\n--- DANH MUC TRA CU ---\n");
+                printf("- Chasen\n- Dao tach tra Pho Nhi\n- Gac am\n- Khay tra tre\n- Khan lau ban tra\n- Kep gap chen\n- Lu xong tram\n- Loc tra\n- Muong xuc tra\n- Thuyen tra\n- Thuong nhac ban tra\n- Tong tra\n- De nen giu nhiet\n- Dong ho cat\n");
+                break;
+            case 0:
+                printf("Dong he thong. Hen gap lai.\n");
+                exit(0);
+            default:
+                printf("Lua chon khong hop le. Vui long thu lai.\n");
+        }
+    }
+    return 0;
+}
