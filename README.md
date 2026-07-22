@@ -115,7 +115,7 @@
 Dưới đây là từng đường dẫn để xem chi tiết từng bài phân tích. Vui lòng truy cập vào từng tệp tin để xem báo cáo chi tiết:
 
 # Danh sách trà
-1. [Bạch Trà Bạch Hào Ngân Châm](./Trà/Bạch Trà Bạch Hào Ngân Châm)
+1. [Bạch Trà Bạch Hào Ngân Châm]
 2. [Hồng Trà](./Trà/Hồng Trà)
 3. [Trà Hoa Cúc Kỷ Tử](./Trà/Trà Hoa Cúc Kỷ Tử)
 4. [Trà Long Tỉnh](./Trà/Trà Long Tỉnh)
