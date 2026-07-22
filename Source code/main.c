@@ -2,7 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Hàm hỗ trợ thay thế chuỗi (dùng để xử lý tiếng Việt có dấu dạng UTF-8)
+// Thư viện hỗ trợ tạo thư mục tùy theo hệ điều hành
+#ifdef _WIN32
+#include <direct.h>
+#define MKDIR(path) _mkdir(path)
+#else
+#include <sys/stat.h>
+#define MKDIR(path) mkdir(path, 0777)
+#endif
+
+// Hàm thay thế chuỗi để xử lý tiếng Việt UTF-8
 void replace_string(char *target, const char *needle, const char *replacement) {
     char buffer[1024] = {0};
     char *insert_point = &buffer[0];
@@ -25,87 +34,55 @@ void replace_string(char *target, const char *needle, const char *replacement) {
     strcpy(target, buffer);
 }
 
-// Hàm chuyển đổi Tiếng Việt có dấu sang không dấu cơ bản (UTF-8)
+// Hàm chuyển Tiếng Việt có dấu thành không dấu và khoảng trắng thành dấu gạch ngang
 void remove_diacritics(const char *input, char *output) {
     strcpy(output, input);
     
-    // Xử lý các ký tự có dấu cơ bản trong danh sách của bạn
+    // Xử lý các ký tự có dấu cho: trà, chén, ấm, cụ
     replace_string(output, "à", "a");
-    replace_string(output, "á", "a");
-    replace_string(output, "ả", "a");
-    replace_string(output, "ã", "a");
-    replace_string(output, "ạ", "a");
-    replace_string(output, "ấ", "a");
-    replace_string(output, "ầ", "a");
-    replace_string(output, "ẫ", "a");
-    replace_string(output, "ẩ", "a");
-    replace_string(output, "ậ", "a");
     replace_string(output, "é", "e");
-    replace_string(output, "è", "e");
+    replace_string(output, "ấ", "a");
     replace_string(output, "ụ", "u");
-    replace_string(output, "ủ", "u");
     
-    // Thay thế khoảng trắng thành dấu gạch ngang cho chuẩn URL GitHub
+    // Thay thế khoảng trắng thành dấu gạch ngang cho chuẩn URL
     replace_string(output, " ", "-");
 }
 
 int main() {
-    // Tên tài khoản và Repository GitHub của bạn (thay đổi tại đây)
-    const char *github_base_url = "https://github.com/Username/RepoName/tree/main/";
+    // Đặt hệ thống hiển thị UTF-8 trên CMD Windows để không bị lỗi font
+    system("chcp 65001 > nul");
+
+    // TÊN REPO LẤY TỪ ẢNH CỦA BẠN: So-Tay-Tra-Ngo
+    // HÃY THAY THẾ "[TEN_TAI_KHOAN_CUA_BAN]" bằng username thật của bạn
+    const char *base_url = "https://github.com/[]/So-Tay-Tra-Ngo/tree/main/";
     
-    // Danh sách các thư mục
+    // 4 thư mục gốc
     const char *folders[] = {"trà", "chén trà", "ấm trà", "trà cụ"};
     int num_folders = sizeof(folders) / sizeof(folders[0]);
 
-    // Tạo file HTML
-    FILE *html_file = fopen("index.html", "w");
-    if (html_file == NULL) {
-        printf("Loi: Khong the tao file HTML.\n");
-        return 1;
-    }
+    printf("\n");
+    printf("====================================================================================================\n");
+    printf("| %-12s | %-12s | %-65s |\n", "Thu muc goc", "Ten URL", "Duong dan GitHub (Giu Ctrl + Click chuot trai de mo)");
+    printf("====================================================================================================\n");
 
-    // Ghi cấu trúc HTML và CSS cơ bản
-    fprintf(html_file, "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n");
-    fprintf(html_file, "<meta charset=\"UTF-8\">\n");
-    fprintf(html_file, "<title>Quản Lý Thư Mục Trà Cụ</title>\n");
-    fprintf(html_file, "<style>\n");
-    fprintf(html_file, "body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }\n");
-    fprintf(html_file, "table { width: 100%%; border-collapse: collapse; margin-top: 20px; }\n");
-    fprintf(html_file, "th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }\n");
-    fprintf(html_file, "th { background-color: #4CAF50; color: white; }\n");
-    fprintf(html_file, "tr:hover { background-color: #f1f1f1; }\n");
-    fprintf(html_file, "a { color: #0066cc; text-decoration: none; font-weight: bold; }\n");
-    fprintf(html_file, "a:hover { text-decoration: underline; }\n");
-    fprintf(html_file, "</style>\n</head>\n<body>\n");
-
-    fprintf(html_file, "<h2>Danh sách Thư mục Trà Đạo trên GitHub</h2>\n");
-    fprintf(html_file, "<table>\n");
-    fprintf(html_file, "<tr><th>Tên Thư Mục (Gốc)</th><th>Tên Đã Chuyển Đổi (URL)</th><th>Liên Kết GitHub</th></tr>\n");
-
-    // Xử lý từng thư mục và ghi vào bảng
     for (int i = 0; i < num_folders; i++) {
         char url_name[256];
         remove_diacritics(folders[i], url_name);
         
-        fprintf(html_file, "<tr>\n");
-        fprintf(html_file, "<td>%s</td>\n", folders[i]);
-        fprintf(html_file, "<td>%s</td>\n", url_name);
-        fprintf(html_file, "<td><a href=\"%s%s\" target=\"_blank\">Truy cập thư mục %s</a></td>\n", github_base_url, url_name, url_name);
-        fprintf(html_file, "</tr>\n");
+        // Tạo đường dẫn hoàn chỉnh
+        char full_url[512];
+        sprintf(full_url, "%s%s", base_url, url_name);
+
+        // In ra dạng bảng trên CMD
+        printf("| %-12s | %-12s | %-65s |\n", folders[i], url_name, full_url);
+
+        // Tự động tạo thư mục vật lý trên máy tính (nếu chưa có)
+        if (MKDIR(url_name) == 0) {
+            // Tạo thành công sẽ không báo gì để tránh rối bảng
+        }
     }
-
-    fprintf(html_file, "</table>\n");
-    fprintf(html_file, "</body>\n</html>\n");
-    fclose(html_file);
-
-    printf("Da tao thanh cong trang web 'index.html'!\n");
-    printf("Dang mo trinh duyet...\n");
-
-    // Lệnh gọi CMD để mở file HTML trên Windows
-    system("start index.html");
-    
-    // Nếu bạn dùng macOS, thay bằng: system("open index.html");
-    // Nếu bạn dùng Linux, thay bằng: system("xdg-open index.html");
+    printf("====================================================================================================\n");
+    printf(">> Da tu dong tao 4 thu muc tren may tinh tai noi chay file nay.\n\n");
 
     return 0;
 }
